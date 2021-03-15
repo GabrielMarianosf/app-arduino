@@ -1,21 +1,79 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
+      </ScrollView>
+
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'black',
   },
+  fundo: {
+    backgroundColor: 'white',
+    marginHorizontal: 20,
+    padding: 20,
+    marginVertical: 10,
+    backgroundColor: 'red',
+    borderRadius: 3
+
+
+  },
+  texto: {
+    color: 'white',
+  },
+  title: {
+    fontWeight: 'bold',
+    color: 'white'
+
+
+
+  }
 });
