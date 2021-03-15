@@ -45,6 +45,10 @@ export default function App() {
         <Text style={styles.title}>Titulo</Text>
         <Text style={styles.texto}>Que dahora !!!!</Text>
       </View>
+      <View style={styles.fundo}>
+        <Text style={styles.title}>Titulo</Text>
+        <Text style={styles.texto}>Que dahora !!!!</Text>
+      </View>
       </ScrollView>
 
     </SafeAreaView>
