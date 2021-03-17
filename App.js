@@ -7,6 +7,12 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <ScrollView>
       <View style={styles.fundo}>
+        <StatusBar 
+          barStyle= "light-content"
+          hidden={false}
+          backgroundColor="yellow"
+          translucent={false}
+        />
         <Text style={styles.title}>Titulo</Text>
         <Text style={styles.texto}>Que dahora !!!!</Text>
       </View>
