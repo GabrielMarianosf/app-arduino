@@ -5,56 +5,19 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
+
       <ScrollView>
-      <View style={styles.fundo}>
-        <StatusBar 
-          barStyle= "light-content"
+
+        <StatusBar
+          barStyle="light-content"
           hidden={false}
-          backgroundColor="yellow"
+          backgroundColor="#F0FFF0"
           translucent={false}
         />
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
+        <View style={styles.fundo}>
+          <Text style={styles.texto}>Teste</Text>
+        </View>
 
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
-      <View style={styles.fundo}>
-        <Text style={styles.title}>Titulo</Text>
-        <Text style={styles.texto}>Que dahora !!!!</Text>
-      </View>
       </ScrollView>
 
     </SafeAreaView>
@@ -64,26 +27,24 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#F0FFF0',
   },
+  
   fundo: {
-    backgroundColor: 'white',
     marginHorizontal: 20,
     padding: 20,
     marginVertical: 10,
-    backgroundColor: 'red',
+    backgroundColor: '#7FFF00',
     borderRadius: 3
-
-
   },
+
   texto: {
-    color: 'white',
+    color: 'black',
+    alignItems: 'center'
   },
+
   title: {
     fontWeight: 'bold',
-    color: 'white'
-
-
-
+    color: 'black'
   }
 });
