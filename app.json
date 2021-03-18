@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "ap",
-    "slug": "ap",
+    "name": "Chacara Guaruja",
+    "slug": "CG",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/android/drawable-xxxhdpi/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/android/drawable-xxxhdpi/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#F0FFF0"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
