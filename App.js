@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Animated } from 'react-native';
+import { StyleSheet, Text, Button, Alert, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
 
 
@@ -13,12 +13,23 @@ export default function App() {
         <StatusBar
           barStyle="light-content"
           hidden={false}
-          backgroundColor="yellow"
+          backgroundColor="#00FF7F"
         />
-
-
-        
+      <Text style={styles.title}>Chácara Guarujá</Text>
+      <Text style={styles.textoCenter}>Algum texto em baixo</Text>
+      <View style={{ width: 100, flexDirection:"row", alignItems:"center"}}>
+      <Button
+      onPress={() => Alert.alert('Você apertou o botão.')}
+      title="Salvar"
+      color="#00FF7F"
+      />
+      <Button
+      onPress={() => Alert.alert('Você apertou outro botão.')}
+      title="Cancelar"
+      color="#DC143C"
+      /></View>
       </ScrollView>
+      
     </SafeAreaView>
   );
 }
@@ -49,8 +60,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
+  textoCenter: {
+    color: 'black',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+
   title: {
     fontWeight: 'bold',
-    color: 'black'
+    color: 'black',
+    textAlign: 'center'
   }
 });
