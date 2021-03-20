@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
-export default function Home() {
-    return (
-        <SafeAreaView style={styles.container}>
 
+
+export default function Home() {
+
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+    return (
+
+        <SafeAreaView style={styles.container}>
             <ScrollView>
                 <StatusBar
                     barStyle="light-content"
@@ -26,7 +32,6 @@ export default function Home() {
                         value={isEnabled}
                     />
                 </View>
-
                 <Text>{"\n"}</Text>
                 <Text style={styles.texto}> Sensor 1: [status]</Text>
                 <Text style={styles.texto}> Local: [local]</Text>
@@ -116,5 +121,3 @@ const createTwoButtonAlert = () =>
         ]
     );
 
-const [isEnabled, setIsEnabled] = useState(false);
-const toggleSwitch = () => setIsEnabled(previousState => !previousState);

@@ -7,11 +7,10 @@ import Home from './pages/home';
 import Config from './pages/config';
 
 export default function Routes() {
-
     return (
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Config" component={Config} />
-      </Drawer.Navigator>
+        <Drawer.Navigator>
+            <Drawer.Screen name="Home" component={Home} />
+            <Drawer.Screen name="Config" component={Config} />
+        </Drawer.Navigator>
     );
 }
