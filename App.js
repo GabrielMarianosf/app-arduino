@@ -1,8 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, Button, Alert, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
-
-
+import { StyleSheet, Text, Button, Alert, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';  
 
 export default function App() {
 
@@ -16,23 +14,44 @@ export default function App() {
           backgroundColor="#00FF7F"
         />
       <Text style={styles.title}>Chácara Guarujá</Text>
-      <Text style={styles.textoCenter}>Algum texto em baixo</Text>
-      <View style={{ width: 100, flexDirection:"row", alignItems:"center"}}>
+      <Text style={styles.textoCenter}>[descrição da tela]</Text>
+      <Text style={styles.texto}> Sensor 1: [status]</Text>
+      <Text style={styles.texto}> Local: [local]</Text>
+      <Text style={styles.texto}> Nível: [nn%]</Text>
+      <Text style={styles.texto}> Ult. Atualização: [dd/mm/aa - hh:mm]</Text>
+      <View style={{alignItems:"center", flexDirection:"row"}}>
       <Button
-      onPress={() => Alert.alert('Você apertou o botão.')}
-      title="Salvar"
+      onPress={() => Alert.alert('Tem certeza?')}
+      title="Editar"
       color="#00FF7F"
+      width="10px"
       />
       <Button
-      onPress={() => Alert.alert('Você apertou outro botão.')}
-      title="Cancelar"
+      onPress={createTwoButtonAlert}
+      title="Excluir"
       color="#DC143C"
-      /></View>
+      width="10px"
+      />
+      </View>
       </ScrollView>
       
     </SafeAreaView>
   );
 }
+
+const createTwoButtonAlert = () =>
+Alert.alert(
+  "Excluir Sensor",
+  "Tem certeza que deseja excluir o sensor selecionado?",
+  [
+    {
+      text: "Não",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel"
+    },
+    { text: "Sim", onPress: () => console.log("OK Pressed") }
+  ]
+);
 
 const styles = StyleSheet.create({
   container: {
