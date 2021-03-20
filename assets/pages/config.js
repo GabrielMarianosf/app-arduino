@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, Text, TextInput, ScrollView, View, Button, Alert, Switch } from 'react-native';
+import NavBar from 'react-native-nav'
 
 export default function Config() {
 
@@ -15,6 +16,11 @@ export default function Config() {
                     hidden={false}
                     backgroundColor="#00FF7F"
                 />
+
+<NavBar>
+  
+</NavBar>
+
         <Text style={styles.title}>Chácara Guarujá</Text>
         <Text style={styles.textoCenter}>Configurações</Text>
         <Text>{"\n"}</Text>
