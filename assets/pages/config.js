@@ -108,6 +108,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center'
     },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 0.3,
+      },
 
     titleEsq: {
         fontWeight: 'bold',
@@ -115,6 +120,6 @@ const styles = StyleSheet.create({
     },
 
     barra: {
-        color: '#00FF7F'
+        backgroundColor: 'blue'
     }
 });

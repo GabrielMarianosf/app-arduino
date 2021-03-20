@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
+import NavBar from 'react-native-nav';
 
-
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
 
     const createTwoButtonAlert = () =>
-    Alert.alert(
-        "Excluir Sensor",
-        "Tem certeza que deseja excluir o sensor selecionado?",
-        [
-            {
-                text: "Não",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-            },
-            { text: "Sim", onPress: () => console.log("OK Pressed") }
-        ]
-    );
+        Alert.alert(
+            "Excluir Sensor",
+            "Tem certeza que deseja excluir o sensor selecionado?",
+            [
+                {
+                    text: "Não",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "Sim", onPress: () => console.log("OK Pressed") }
+            ]
+        );
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -25,7 +25,11 @@ export default function Home({navigation}) {
     return (
 
         <SafeAreaView style={styles.container}>
+
             <ScrollView>
+                <NavBar>
+
+                </NavBar>
                 <StatusBar
                     barStyle="light-content"
                     hidden={false}
@@ -77,6 +81,7 @@ export default function Home({navigation}) {
             </ScrollView>
 
         </SafeAreaView>
+
     );
 
 }
