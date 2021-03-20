@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
 
-export default function Home() {
+export default function Home({navigation}) {
 
     const createTwoButtonAlert = () =>
     Alert.alert(
@@ -58,7 +58,7 @@ export default function Home() {
                         width="10px"
                     />
                     <Button
-                        onPress={createTwoButtonAlert}
+                        onPress={() => navigation.openDrawer()}
                         title="Excluir"
                         color="#DC143C"
                         width="10px"
