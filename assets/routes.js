@@ -7,7 +7,6 @@ import Home from './pages/home';
 import Config from './pages/config';
 
 export default function Routes() {
-
     return (
       <Drawer.Navigator>
         <Drawer.Screen name="Página Inicial" component={Home} />
