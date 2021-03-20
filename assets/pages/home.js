@@ -3,7 +3,6 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
 
-
 export default function Home() {
 
     const createTwoButtonAlert = () =>
@@ -20,14 +19,8 @@ export default function Home() {
         ]
     );
 
-<<<<<<< HEAD
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-=======
-const [isEnabled, setIsEnabled] = useState(false);
-const toggleSwitch = () => setIsEnabled(previousState => !previousState);
->>>>>>> 8aa0cdb441aa8641aa451c514b68935e72b7ad7d
 
     return (
 
@@ -125,10 +118,5 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center'
     }
-<<<<<<< HEAD
-
 });
 
-=======
-});
->>>>>>> 8aa0cdb441aa8641aa451c514b68935e72b7ad7d
