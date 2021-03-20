@@ -1,41 +1,19 @@
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, Button, Alert, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';  
 
+import Routes from './assets/routes';
+
 export default function App() {
 
   return (
-    <SafeAreaView style={styles.container}>
+    <NavigationContainer>
+      <Routes/>
+    </NavigationContainer>
       
-      <ScrollView>
-        <StatusBar
-          barStyle="light-content"
-          hidden={false}
-          backgroundColor="#00FF7F"
-        />
-      <Text style={styles.title}>Chácara Guarujá</Text>
-      <Text style={styles.textoCenter}>[descrição da tela]</Text>
-      <Text style={styles.texto}> Sensor 1: [status]</Text>
-      <Text style={styles.texto}> Local: [local]</Text>
-      <Text style={styles.texto}> Nível: [nn%]</Text>
-      <Text style={styles.texto}> Ult. Atualização: [dd/mm/aa - hh:mm]</Text>
-      <View style={{alignItems:"center", flexDirection:"row"}}>
-      <Button
-      onPress={() => Alert.alert('Tem certeza?')}
-      title="Editar"
-      color="#00FF7F"
-      width="10px"
-      />
-      <Button
-      onPress={createTwoButtonAlert}
-      title="Excluir"
-      color="#DC143C"
-      width="10px"
-      />
-      </View>
-      </ScrollView>
-      
-    </SafeAreaView>
+    
   );
 }
 
