@@ -20,9 +20,14 @@ export default function Home() {
         ]
     );
 
+<<<<<<< HEAD
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+=======
+const [isEnabled, setIsEnabled] = useState(false);
+const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+>>>>>>> 8aa0cdb441aa8641aa451c514b68935e72b7ad7d
 
     return (
 
@@ -120,6 +125,10 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center'
     }
+<<<<<<< HEAD
 
 });
 
+=======
+});
+>>>>>>> 8aa0cdb441aa8641aa451c514b68935e72b7ad7d
