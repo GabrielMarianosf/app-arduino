@@ -10,8 +10,8 @@ export default function Routes() {
 
     return (
       <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Config" component={Config} />
+        <Drawer.Screen name="Página Inicial" component={Home} />
+        <Drawer.Screen name="Configurações" component={Config} />
       </Drawer.Navigator>
     );
 }

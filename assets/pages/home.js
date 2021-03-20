@@ -3,6 +3,24 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
 export default function Home() {
+
+    const createTwoButtonAlert = () =>
+    Alert.alert(
+        "Excluir Sensor",
+        "Tem certeza que deseja excluir o sensor selecionado?",
+        [
+            {
+                text: "Não",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+            },
+            { text: "Sim", onPress: () => console.log("OK Pressed") }
+        ]
+    );
+
+const [isEnabled, setIsEnabled] = useState(false);
+const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -101,20 +119,3 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
-
-const createTwoButtonAlert = () =>
-    Alert.alert(
-        "Excluir Sensor",
-        "Tem certeza que deseja excluir o sensor selecionado?",
-        [
-            {
-                text: "Não",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-            },
-            { text: "Sim", onPress: () => console.log("OK Pressed") }
-        ]
-    );
-
-const [isEnabled, setIsEnabled] = useState(false);
-const toggleSwitch = () => setIsEnabled(previousState => !previousState);
