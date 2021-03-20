@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, Text, TextInput, ScrollView, View, Button, Alert, Switch } from 'react-native';
-import NavBar from 'react-native-nav'
+import NavBar, {NavButtonText, NavButton, NavTitle} from 'react-native-nav'
 
-export default function Config() {
+export default function Config({navigation}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     return (
+        
         <SafeAreaView style={styles.container}>
+        
             <ScrollView>
+            <NavBar style={styles.barra}>
+            <NavButton onPress={() => navigation.openDrawer()}>
+            <NavButtonText>
+            {"Menu"}
+            </NavButtonText>
+            </NavButton>
+            <NavTitle>
+            {"Configurações  "}
+            </NavTitle>
+            </NavBar>
                 <StatusBar
                     barStyle="light-content"
                     hidden={false}
                     backgroundColor="#00FF7F"
                 />
-
-<NavBar>
-  
-</NavBar>
-
-        <Text style={styles.title}>Chácara Guarujá</Text>
-        <Text style={styles.textoCenter}>Configurações</Text>
-        <Text>{"\n"}</Text>
+        <Text></Text>
         <Text style={styles.titleEsq}> Conexão</Text>
         <Text></Text>
         <Text> IP: </Text>
@@ -77,9 +82,10 @@ export default function Config() {
                         width="10px"
                     />
                     </View>
-                    <Text>{"\n"}{"\n"}{"\n"}</Text>
+                    <Text>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
         </ScrollView>
         </SafeAreaView>
+        
     );
 }
 
@@ -106,5 +112,9 @@ const styles = StyleSheet.create({
     titleEsq: {
         fontWeight: 'bold',
         color: 'black',
+    },
+
+    barra: {
+        color: '#00FF7F'
     }
 });
