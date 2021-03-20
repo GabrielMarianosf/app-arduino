@@ -8,9 +8,16 @@ import Config from './pages/config';
 
 export default function Routes() {
     return (
-      <Drawer.Navigator>
+      <Drawer.Navigator drawerType={'slide'} 
+      drawerContentOptions={{
+        activeTintColor: '#e91e63',
+        itemStyle: {  },
+      }}
+      >
+        
         <Drawer.Screen name="Página Inicial" component={Home} />
         <Drawer.Screen name="Configurações" component={Config} />
+
       </Drawer.Navigator>
     );
 }
