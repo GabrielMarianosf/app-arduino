@@ -56,12 +56,14 @@ export default function Home({ navigation }) {
                 <Text style={styles.texto}> Nível: [nn%]</Text>
                 <Text style={styles.texto}> Ult. Atualização: [dd/mm/aa - hh:mm]</Text>
                 <View style={{ alignItems: "center", flexDirection: "row" }}>
+                <View style={styles.space} />
                     <Button
                         onPress={() => Alert.alert('Tem certeza?')}
                         title="Editar"
                         color="#00FF7F"
                         width="10px"
                     />
+                    <View style={styles.space} />
                     <Button
                         onPress={() => navigation.openDrawer()}
                         title="Excluir"
@@ -123,6 +125,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'black',
         textAlign: 'center'
+    },
+
+    space: {
+        width: 5, // or whatever size you need
+        height: 20,
     }
 });
 
