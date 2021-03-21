@@ -34,6 +34,7 @@ export default function Home({ navigation }) {
             <ScrollView>
                 
                 <StatusBar
+                translucent={true}
                     barStyle="light-content"
                     hidden={false}
                     backgroundColor="#00FF7F"
