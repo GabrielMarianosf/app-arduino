@@ -3,7 +3,6 @@ import React from 'react';
 
 const Drawer = createDrawerNavigator();
 
-import Config from './pages/config';
 import { Routes2, Routes3 } from './routes2';
 
 const Routes = () => {
