@@ -18,7 +18,7 @@ const Routes2 = ({navigation}) => {
                     headerStyle: {
                         backgroundColor: '#00FF7F',
                     },
-                    headerTintColor: '#DC143C',
+                    headerTintColor: 'white',
                     headerLeft: () => (
                         <TouchableHighlight style={styles.img} onPress={() => navigation.openDrawer()}>
                         <Image

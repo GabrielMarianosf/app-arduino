@@ -23,11 +23,11 @@ export default function Config({navigation}) {
             {"Configurações  "}
             </NavTitle>
             </NavBar> */}
-                <StatusBar
+                {/* <StatusBar
                     barStyle="light-content"
                     hidden={false}
                     backgroundColor="#00FF7F"
-                />
+                /> */}
         <Text></Text>
         <Text style={styles.titleEsq}> Conexão</Text>
         <Text></Text>
