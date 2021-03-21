@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
+import NavBar from 'react-native-nav';
 
 import config from './config';
 
@@ -58,14 +59,8 @@ export default function Home({ navigation }) {
                 <Text style={styles.texto}> Ult. Atualização: [dd/mm/aa - hh:mm]</Text>
                 <View style={{ alignItems: "center", flexDirection: "row" }}>
                 <View style={styles.space} />
-<<<<<<< Updated upstream
                     <Button
                         
-=======
-                    <Button 
-
-                        onPress={() => Alert.alert('Tem certeza?')}
->>>>>>> Stashed changes
                         title="Editar"
                         color="#00FF7F"
                         width="10px"
@@ -76,16 +71,9 @@ export default function Home({ navigation }) {
                         title="Excluir"
                         color="#DC143C"
                         width="10px"
-<<<<<<< Updated upstream
                     /></View>
                 </View>
                 <Text></Text>
-=======
-                    />
-                    </View>
-
-
->>>>>>> Stashed changes
                 <View style={{ alignItems: "center" }}>
                     <Button
                         onPress={() => Alert.alert('Tem certeza?')}
@@ -148,4 +136,3 @@ const styles = StyleSheet.create({
         
     }
 });
-
