@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 import NavBar from 'react-native-nav';
 
+
 export default function Home({ navigation }) {
 
     const createTwoButtonAlert = () =>
@@ -21,15 +22,15 @@ export default function Home({ navigation }) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    
+
 
     return (
 
         <SafeAreaView style={styles.container}>
 
             <ScrollView>
-                <NavBar>
-
-                </NavBar>
+                
                 <StatusBar
                     barStyle="light-content"
                     hidden={false}

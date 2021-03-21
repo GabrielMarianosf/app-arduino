@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, Text, TextInput, ScrollView, View, Button, Alert, Switch } from 'react-native';
-import NavBar, {NavButtonText, NavButton, NavTitle} from 'react-native-nav'
+// import NavBar, {NavButtonText, NavButton, NavTitle} from 'react-native-nav'
 
 export default function Config({navigation}) {
 
@@ -13,7 +13,7 @@ export default function Config({navigation}) {
         <SafeAreaView style={styles.container}>
         
             <ScrollView>
-            <NavBar style={styles.barra}>
+            {/* <NavBar style={styles.barra}>
             <NavButton onPress={() => navigation.openDrawer()}>
             <NavButtonText>
             {"Menu"}
@@ -22,7 +22,7 @@ export default function Config({navigation}) {
             <NavTitle>
             {"Configurações  "}
             </NavTitle>
-            </NavBar>
+            </NavBar> */}
                 <StatusBar
                     barStyle="light-content"
                     hidden={false}

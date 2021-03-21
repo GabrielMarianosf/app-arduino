@@ -1,36 +1,29 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react';
-import NavBar from 'react-native-nav';
-import {ScrollView} from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
-import Home from './pages/home';
 import Config from './pages/config';
-import { View } from 'react-native';
-import { Text } from 'react-native';
+import { Routes2, Routes3 } from './routes2';
 
-export default function Routes() {
-    return (
-      
-      <Drawer.Navigator drawerType={'slide'} 
+const Routes = () => {
+  return (
+
+    <Drawer.Navigator drawerType={'slide'}
       drawerContentOptions={{
         activeTintColor: '#e91e63',
-        itemStyle: {  },
-        drawerIcon: { }
+        itemStyle: {},
+        drawerIcon: {}
 
       }}
       drawerStyle={{
 
       }}>
-        
-        <Drawer.Screen name="Página Inicial" component={Home} />
-        <Drawer.Screen name="Configurações" component={Config} />
-        
-        
-        
-        
-      </Drawer.Navigator>
-      
-    );
+      <Drawer.Screen name="Página Inicial" component={Routes2} />
+      <Drawer.Screen name="Configurações" component={Routes3} />
+    </Drawer.Navigator>
+
+  );
 }
+
+export default Routes;
