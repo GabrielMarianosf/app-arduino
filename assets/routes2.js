@@ -30,17 +30,17 @@ const Routes2 = ({navigation}) => {
             />
             <Stack.Screen name="Config" component={Config} 
             options={{
-                title: 'Configuração',
+                title: 'Configurações',
                 headerStyle: {
                     backgroundColor: '#00FF7F',
                 },
-                headerTintColor: '#DC143C',
+                headerTintColor: 'white',
             }} />
         </Stack.Navigator>
     );
 }
 
-const Routes3 = () => {
+const Routes3 = ({navigation}) => {
     return (
         <Stack.Navigator>
             <Stack.Screen
@@ -51,7 +51,14 @@ const Routes3 = () => {
                     headerStyle: {
                         backgroundColor: '#00FF7F',
                     },
-                    headerTintColor: 'red',
+                    headerTintColor: 'white',
+                    headerLeft: () => (
+                        <TouchableHighlight style={styles.img} onPress={() => navigation.openDrawer()}>
+                        <Image
+                        source={require('../assets/android/drawable-xxxhdpi/hamburguer.png')}
+                        />
+                        </TouchableHighlight>
+                      ),
                 }}
             />
         </Stack.Navigator>
