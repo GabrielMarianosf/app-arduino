@@ -13,7 +13,7 @@ const Routes2 = () => {
                 name="Home"
                 component={Home}
                 options={{
-                    title: 'My home',
+                    title: 'Chácara Guarujá',
                     headerStyle: {
                         backgroundColor: '#00FF7F',
                     },
@@ -21,6 +21,14 @@ const Routes2 = () => {
                 }}
 
             />
+            <Stack.Screen name="Config" component={Config} 
+            options={{
+                title: 'Configuração',
+                headerStyle: {
+                    backgroundColor: '#00FF7F',
+                },
+                headerTintColor: 'red',
+            }} />
         </Stack.Navigator>
     );
 }

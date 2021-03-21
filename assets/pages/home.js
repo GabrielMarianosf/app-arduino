@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 import NavBar from 'react-native-nav';
 
+import config from './config';
+
 
 export default function Home({ navigation }) {
 
@@ -65,7 +67,7 @@ export default function Home({ navigation }) {
                     />
                     <View style={styles.space} />
                     <Button
-                        onPress={() => navigation.openDrawer()}
+                        onPress={() => navigation.navigate(config)}
                         title="Excluir"
                         color="#DC143C"
                         width="10px"
