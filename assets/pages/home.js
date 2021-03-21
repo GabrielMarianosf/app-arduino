@@ -60,7 +60,7 @@ export default function Home({ navigation }) {
                 <View style={{ alignItems: "center", flexDirection: "row" }}>
                 <View style={styles.space} />
                     <Button
-                        onPress={() => Alert.alert('Tem certeza?')}
+                        
                         title="Editar"
                         color="#00FF7F"
                         width="10px"
