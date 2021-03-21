@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator,  } from '@react-navigation/stack';
-import { Image, TouchableHighlight } from 'react-native';
+import { Image, TouchableHighlight, StyleSheet } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +20,7 @@ const Routes2 = ({navigation}) => {
                     },
                     headerTintColor: '#DC143C',
                     headerLeft: () => (
-                        <TouchableHighlight onPress={() => navigation.openDrawer()}>
+                        <TouchableHighlight style={styles.img} onPress={() => navigation.openDrawer()}>
                         <Image
                         source={require('../assets/android/drawable-xxxhdpi/hamburguer.png')}
                         />
@@ -59,3 +59,10 @@ const Routes3 = () => {
 }
 
 export { Routes2, Routes3 };
+
+const styles = StyleSheet.create({
+    
+      img: {
+        left: 15,
+      }
+    });
