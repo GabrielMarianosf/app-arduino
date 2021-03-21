@@ -39,9 +39,8 @@ export default function Home({ navigation }) {
                     backgroundColor="#00FF7F"
                 />
                 <Text></Text>
-                <Text style={styles.title}>Chácara Guarujá</Text>
-                <Text style={styles.textoCenter}>Gerenciamento de Sensores</Text>
-                <Text>{"\n"}</Text>
+                <Text style={styles.title}>Gerenciamento de Sensores</Text>
+                <Text></Text>
                 <View style={styles.container}>
                     <Text style={styles.texto}> Atualização Automática:</Text>
                     <Switch
@@ -52,7 +51,8 @@ export default function Home({ navigation }) {
                         value={isEnabled}
                     />
                 </View>
-                <Text>{"\n"}</Text>
+                <View value="sensor" style={styles.viewsensor}>
+                <Text></Text>
                 <Text style={styles.texto}> Sensor 1: [status]</Text>
                 <Text style={styles.texto}> Local: [local]</Text>
                 <Text style={styles.texto}> Nível: [nn%]</Text>
@@ -72,9 +72,8 @@ export default function Home({ navigation }) {
                         color="#DC143C"
                         width="10px"
                     /></View>
-
-                <Text>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}
-                    {"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+                </View>
+                <Text></Text>
                 <View style={{ alignItems: "center" }}>
                     <Button
                         onPress={() => Alert.alert('Tem certeza?')}
@@ -82,9 +81,8 @@ export default function Home({ navigation }) {
                         color="#00FF7F"
                         width="10px"
                     /></View>
-
             </ScrollView>
-
+            
         </SafeAreaView>
 
     );
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         backgroundColor: 'white',
     },
 
@@ -130,8 +128,12 @@ const styles = StyleSheet.create({
     },
 
     space: {
-        width: 5, // or whatever size you need
+        width: 5,
         height: 20,
+    },
+
+    viewsensor: {
+        
     }
 });
 
