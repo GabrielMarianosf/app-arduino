@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
-import NavBar from 'react-native-nav';
 
+import { database } from './config_firebase'
+import 'firebase/storage';
+import 'firebase/firestore';
 import config from './config';
 
 
 export default function Home({ navigation }) {
+
+    const [produtos, setProdutos] = useState([]);
+
+    useEffect(()=> {
+        database.collection('arduino').onSnapshot((query) =>{
+            const list = [];
+            query.forEach((doc)=>{
+                list.push(doc.data());
+            })
+            setProdutos(list);
+        })
+    },[])
 
     const createTwoButtonAlert = () =>
         Alert.alert(
@@ -24,8 +38,6 @@ export default function Home({ navigation }) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    
-
 
     return (
 
@@ -39,7 +51,11 @@ export default function Home({ navigation }) {
                     hidden={false}
                     backgroundColor="#00FF7F"
                 />
-                <Text></Text>
+                <View>
+                {produtos.map((produto)=>{
+                    return <Text key={produto.led}>{ produto.led  }</Text>
+                })}
+                </View>
                 <Text style={styles.title}>Gerenciamento de Sensores</Text>
                 <Text></Text>
                 <View style={styles.container}>
