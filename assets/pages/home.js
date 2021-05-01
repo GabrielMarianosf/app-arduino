@@ -1,26 +1,56 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
+import { FlatList, StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
+import { ListItem } from "react-native-elements";
 
+import config from './config';
 import { database } from './config_firebase'
+import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/firestore';
-import config from './config';
+import { render } from 'react-dom';
 
 
 export default function Home({ navigation }) {
 
-    const [produtos, setProdutos] = useState([]);
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    useEffect(()=> {
-        database.collection('arduino').onSnapshot((query) =>{
-            const list = [];
-            query.forEach((doc)=>{
-                list.push(doc.data());
-            })
-            setProdutos(list);
-        })
-    },[])
+    const [sensores, setSensores] = useState([]);
+    useEffect(() => {
+        database.collection("arduino").onSnapshot((querySnapshot) => {
+            const sensores = [];
+            querySnapshot.docs.forEach((doc) => {
+                const { local, nivel, sensor, ultima_data } = doc.data();
+                sensores.push({
+                    id: doc.id,
+                    local,
+                    nivel,
+                    sensor,
+                    ultima_data,
+                });
+                sensores.map(sens => <Text>{sens.local}</Text>)
+            });
+            setSensores(sensores);
+        });
+    }, [])
+
+    
+     
+    //   const Item = ({ sensores }) => (
+    //     <View style={styles.item}>
+    //       <Text>{sensores.sensor}</Text>
+    //       <Text>{sensores.local}</Text>
+    //       <Text>{sensores.nivel}</Text>
+    //       <Text>{sensores.ultima_data}</Text>
+    //     </View>
+    //   );
+
+    //   const App = () => {
+    //     const renderItem = ({ sensores }) => (
+    //       <Item title={sensores.sensor} />
+    //     );
+    //   }
 
     const createTwoButtonAlert = () =>
         Alert.alert(
@@ -36,30 +66,50 @@ export default function Home({ navigation }) {
             ]
         );
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+        function Sensores (obj) {
+            return (
+                <View>
+                    <Text>Sensor: { obj.obj.sensor}</Text>
+                    <Text>Local: {obj.obj.local}</Text>
+                    <Text>Nivel: {obj.obj.nivel}</Text>
+                    <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
+                    <View style={{ alignItems: "center", flexDirection: "row" }}>
+                        <View style={styles.space} />
+                        <Button
+
+                            title="Editar"
+                            color="#00FF7F"
+                            width="10px"
+                        />
+                        <View style={styles.space} />
+                        <Button
+                            onPress={() => navigation.navigate(config)}
+                            title="Excluir"
+                            color="#DC143C"
+                            width="10px"
+                        /></View>
+                </View>
+            )
+        }
 
     return (
 
         <SafeAreaView style={styles.container}>
 
             <ScrollView>
-                
+
                 <StatusBar
-                translucent={true}
+                    translucent={true}
                     barStyle="light-content"
                     hidden={false}
                     backgroundColor="#00FF7F"
                 />
-                <View>
-                {produtos.map((produto)=>{
-                    return <Text key={produto.led}>{ produto.led  }</Text>
-                })}
-                </View>
-                <Text style={styles.title}>Gerenciamento de Sensores</Text>
-                <Text></Text>
+
+                
+
                 <View style={styles.container}>
-                    <Text style={styles.texto}> Atualização Automática:</Text>
+                    <Text style={styles.texto}> Atualização autmatica
+                    </Text>
                     <Switch
                         trackColor={{ false: "#767577", true: "#81b0ff" }}
                         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -69,26 +119,11 @@ export default function Home({ navigation }) {
                     />
                 </View>
                 <View value="sensor" style={styles.viewsensor}>
-                <Text></Text>
-                <Text style={styles.texto}> Sensor 1: [status]</Text>
-                <Text style={styles.texto}> Local: [local]</Text>
-                <Text style={styles.texto}> Nível: [nn%]</Text>
-                <Text style={styles.texto}> Ult. Atualização: [dd/mm/aa - hh:mm]</Text>
-                <View style={{ alignItems: "center", flexDirection: "row" }}>
-                <View style={styles.space} />
-                    <Button
-                        
-                        title="Editar"
-                        color="#00FF7F"
-                        width="10px"
-                    />
-                    <View style={styles.space} />
-                    <Button
-                        onPress={() => navigation.navigate(config)}
-                        title="Excluir"
-                        color="#DC143C"
-                        width="10px"
-                    /></View>
+                <FlatList 
+                    data={sensores}
+                    renderItem={(item) => <Sensores obj={item.item} />}
+                />
+                    
                 </View>
                 <Text></Text>
                 <View style={{ alignItems: "center" }}>
@@ -99,13 +134,10 @@ export default function Home({ navigation }) {
                         width="10px"
                     /></View>
             </ScrollView>
-            
+
         </SafeAreaView>
-
     );
-
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -150,6 +182,25 @@ const styles = StyleSheet.create({
     },
 
     viewsensor: {
+        backgroundColor: 'yellow',
         
-    }
+
+    },
+    textsensor: {
+        top: -38,
+        left: 50,
+    },
+    textlocal: {
+        top: -38,
+        left: 40
+
+    },
+    textnivel: {
+        top: -38,
+        left: 40
+    },
+    textdata: {
+        top: -38,
+        left: 40
+    },
 });
