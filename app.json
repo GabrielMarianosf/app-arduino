@@ -1,5 +1,6 @@
 {
   "expo": {
+    "userInterfaceStyle": "automatic",
     "name": "Chacara Guaruja",
     "slug": "CG",
     "version": "1.0.0",
