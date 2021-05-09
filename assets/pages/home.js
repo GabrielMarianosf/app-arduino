@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, FlatList, StyleSheet, Text, Button, Alert, Switch, View, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 import { ListItem } from "react-native-elements";
 
 import config from './config';
@@ -10,10 +10,8 @@ import 'firebase/storage';
 import 'firebase/firestore';
 import { render } from 'react-dom';
 
-
 export default function Home({ navigation }) {
-
-   
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -58,6 +56,8 @@ export default function Home({ navigation }) {
             ]
         );
 
+        
+
     function Sensores(obj) {
             return (
                 <View>
@@ -68,11 +68,54 @@ export default function Home({ navigation }) {
                     <View style={{ alignItems: "center", flexDirection: "row" }}>
                         <View style={styles.space} />
                         <Button
-
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                              }}
                             title="Editar"
                             color="#00FF7F"
                             width="10px"
                         />
+                        <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        >
+                            <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+                        <Text>Editar Sensor</Text>
+                        <Text></Text>
+                        <Text> Nome: </Text>
+                        <TextInput
+                        style={styles.input}
+                        placeholder=" Ex.: Sensor 01"
+                        />
+                        <Text></Text>
+                        <Text> Local: </Text>
+                        <TextInput
+                        style={styles.input}
+                        placeholder=" Ex.: Horta"
+                        />
+                        <Text></Text>
+                        <Button
+                            onPress={() => {
+                                Alert.alert('Dados salvos com sucesso.');
+                                setModalVisible(!modalVisible);
+                              }}
+                            title="Salvar"
+                            color="#00FF7F"
+                            width="5px"
+                        />
+                        <View style={styles.space} />
+                        <Button
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                              }}
+                            title="Cancelar"
+                            color="#DC143C"
+                            width="5px"
+                        />
+                        </View></View>
+                        </Modal>
                         <View style={styles.space} />
                         <Button
                             onPress={() => navigation.navigate(config)}
@@ -121,7 +164,7 @@ export default function Home({ navigation }) {
 
     // }
 
-
+    
 
     return (
         <SafeAreaView style={styles.container}>
@@ -207,8 +250,6 @@ const styles = StyleSheet.create({
 
     viewsensor: {
         backgroundColor: 'yellow',
-
-
     },
     textsensor: {
         top: -38,
@@ -227,4 +268,27 @@ const styles = StyleSheet.create({
         top: -38,
         left: 40
     },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 35,
+      },
+
+      modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.00,
+        elevation: 5,
+      },
 });
