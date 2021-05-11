@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
-import { ListItem } from "react-native-elements";
+
+
+// IMPORTANDO ESSA FUNÇÃO PQ O REACT NATIVE NÃO SE RESPONSABILIZA POR BIBLIOTECAS DE TERCEIROS (FIREBASE), O TIMEOUT DO APLICATIVO É DE 60 * 1000 E O FIREBASE PODE
+// PRECISAR DE MAIS TEMPO PARA O TIMEOUT, MOSTRANDO NO CONSOLE.LOG UM ERRO AMARELO DE "AVISO" PARA IGNORAR ESSE AVISO PRECISAMOS IMPORTAR ESSA FUNÇÃO E CHAMAR ELA EMBAIXO
+// PARA IGNORAR NO CONSOLO, PRECISA CHAMAR EM TODAS AS PAGINAS QUE USAR FIREBASE E TIVER CHAMADAS QUE PODEM DEMORAR MUITO.
+
+
+
 
 import config from './config';
 import { database } from './config_firebase'
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/firestore';
-import { render } from 'react-dom';
 
 export default function Home({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+    const [loading, setLoading] = useState(true);
     const [sensores, setSensores] = useState([]);
-    const [loading, setLoading] = useState([true]);
+
+    // variaveis states para editar um sensor
+    const [modalVisible, setModalVisible] = useState(false); // bollean
+    const [array_editar, setArray_editar] = useState([{}]); // objeto
+    const [val_sensor, setValsensor] = useState(''); // string
+    const [val_local, setVallocal] = useState(''); // string
+
     useEffect(() => {
         database.collection("arduino").orderBy('sensor', 'asc').onSnapshot((querySnapshot) => {
             const sensores = [];
@@ -31,101 +40,111 @@ export default function Home({ navigation }) {
                     ultima_data,
                 });
             });
-            setSensores(sensores); 
+            setSensores(sensores);
+            setLoading(false)
         });
-
-        
-        // const query = database.collection("arduino").orderBy('sensor').get();
-
-        // console.log(query.doc)
-        
     }, [])
-    
 
-    const createTwoButtonAlert = () =>
+
+    function Modal_Editar_Sensor(obj) {
+
+        setModalVisible(!modalVisible)
+        setArray_editar(obj);
+
+    }
+
+    function Editar_Sensor(obj) {
+
+        if (val_sensor === '' && val_local === '') {
+            let result = database.collection('arduino').doc(obj.id).update({
+                sensor: obj.sensor,
+                local: obj.local
+            });
+            Alert.alert('Dados Salvos com Sucesso!');
+        }
+        else if (val_sensor === '') {
+            let result = database.collection('arduino').doc(obj.id).update({
+                sensor: obj.sensor,
+                local: val_local
+            });
+            Alert.alert('Dados Salvos com Sucesso!');
+        }
+        else if (val_local === '') {
+            let result = database.collection('arduino').doc(obj.id).update({
+                sensor: val_sensor,
+                local: obj.local
+            });
+            Alert.alert('Dados Salvos com Sucesso!');
+        }
+        else {
+            let result = database.collection('arduino').doc(obj.id).update({
+                sensor: val_sensor,
+                local: val_local
+            });
+            Alert.alert('Dados Salvos com Sucesso!');
+        }
+
+    }
+
+    function Excluir_Sensor(obj) {
         Alert.alert(
             "Excluir Sensor",
             "Tem certeza que deseja excluir o sensor selecionado?",
             [
                 {
                     text: "Não",
-                    onPress: () => console.log("Cancel Pressed"),
+                    onPress: () => console.log('excluir, cancelado'),
                     style: "cancel"
                 },
-                { text: "Sim", onPress: () => console.log("OK Pressed") }
+                {
+                    text: "Sim", onPress: () => {
+
+                        let result = database.collection('arduino').doc(obj.id).delete();
+
+                        if (result) {
+                            Alert.alert('AVISO !', 'Sensor Deletado com Sucesso ! ✔️')
+                        } else {
+                            Alert.alert('AVISO !', 'Falha ao Deletar o Sensor, Verifique se está conectado a internet ( 📶 )')
+                        }
+
+                    }
+                }
             ]
         );
 
-        
+    }
 
     function Sensores(obj) {
-            return (
-                <View>
-                    <Text>Sensor: {obj.obj.sensor}</Text>
-                    <Text>Local: {obj.obj.local}</Text>
-                    <Text>Nivel: {obj.obj.nivel}</Text>
-                    <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
-                    <View style={{ alignItems: "center", flexDirection: "row" }}>
-                        <View style={styles.space} />
-                        <Button
-                            onPress={() => {
-                                setModalVisible(!modalVisible);
-                              }}
-                            title="Editar"
-                            color="#00FF7F"
-                            width="10px"
-                        />
-                        <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        >
-                            <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-                        <Text>Editar Sensor</Text>
-                        <Text></Text>
-                        <Text> Nome: </Text>
-                        <TextInput
-                        style={styles.input}
-                        placeholder=" Ex.: Sensor 01"
-                        />
-                        <Text></Text>
-                        <Text> Local: </Text>
-                        <TextInput
-                        style={styles.input}
-                        placeholder=" Ex.: Horta"
-                        />
-                        <Text></Text>
-                        <Button
-                            onPress={() => {
-                                Alert.alert('Dados salvos com sucesso.');
-                                setModalVisible(!modalVisible);
-                              }}
-                            title="Salvar"
-                            color="#00FF7F"
-                            width="5px"
-                        />
-                        <View style={styles.space} />
-                        <Button
-                            onPress={() => {
-                                setModalVisible(!modalVisible);
-                              }}
-                            title="Cancelar"
-                            color="#DC143C"
-                            width="5px"
-                        />
-                        </View></View>
-                        </Modal>
-                        <View style={styles.space} />
-                        <Button
-                            onPress={() => navigation.navigate(config)}
-                            title="Excluir"
-                            color="#DC143C"
-                            width="10px"
-                        /></View>
-                </View>
-            )
-               
+
+        return (
+            <View>
+                <Text>Sensor: {obj.obj.sensor}</Text>
+                <Text>Local: {obj.obj.local}</Text>
+                <Text>Nivel: {obj.obj.nivel}</Text>
+                <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
+                <View style={{ alignItems: "center", flexDirection: "row" }}>
+                    <View style={styles.space} />
+                    <Button
+                        onPress={() => {
+                            Modal_Editar_Sensor(obj.obj)
+                        }}
+                        title="Editar"
+                        color="#00FF7F"
+                        width="10px"
+                    />
+
+                    <View style={styles.space} />
+                    <Button
+                        onPress={() => {
+                            Excluir_Sensor(obj.obj)
+                        }}
+                        title="Excluir"
+                        color="#DC143C"
+                        width="10px"
+                    /></View>
+            </View>
+        )
+
     }
 
     function Cadsensor() {
@@ -134,37 +153,26 @@ export default function Home({ navigation }) {
             nivel: ' ----- ',
             sensor: ' ----- ',
             ultima_data: ' ----- '
-          };
-          
-          
-          const res = database.collection('arduino').add({
+        };
+        const res = database.collection('arduino').add({
             local: '-',
             nivel: '-',
             sensor: '999',
             ultima_data: '-'
-          });
-          console.log(res);    
-}
+        });
+        console.log(res);
+    }
 
-    // function Progress() {
-
-    //     if (this.state.loading) {
-    //         <ActivityIndicator
-    //             size="large"
-    //             color="green"
-
-    //         />
-    //     } else {
-    //         return (
-    //             <View>
-    //                 <Text>terminou de carregar</Text>
-    //             </View>
-    //         )
-    //     }
-
-    // }
-
-    
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <View style={styles.loader}>
+                    <ActivityIndicator size="large" color="green" style={{ left: 150 }} />
+                    <Text style={{ textAlign: 'center', paddingTop: 20 }}>Se estiver demorando muito, verifique se está conectado na internet. ( 📶 )</Text>
+                </View>
+            </View>
+        );
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -178,16 +186,16 @@ export default function Home({ navigation }) {
                     backgroundColor="#00FF7F"
                 />
 
-                
+
                 <View style={styles.container}>
                     <Text style={styles.texto}> Lista / Gerenciamento de Sensores</Text>
                 </View>
                 <View value="sensor" style={styles.viewsensor}>
                     <FlatList
                         data={sensores}
-                        renderItem={ (item) => <Sensores obj={item.item} /> }
+                        renderItem={(item) => <Sensores obj={item.item} />}
                     />
-                
+
                 </View>
 
                 <View style={{ alignItems: "center" }}>
@@ -198,7 +206,58 @@ export default function Home({ navigation }) {
                         width="10px"
                     />
                 </View>
-                
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    key={array_editar}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text>Editando Sensor: {array_editar.sensor} </Text>
+                            <Text></Text>
+                            <Text> * Numero: </Text>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={text => (setValsensor(text))}
+                                placeholder={'Valor Atual: ' + array_editar.sensor}
+                                autoFocus={true}
+                                maxLength={50}
+                                textAlign={'left'}
+                            />
+                            <Text></Text>
+                            <Text> * Local: </Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder={'Valor atual: ' + array_editar.local}
+                                onChangeText={text => (setVallocal(text))}
+
+                            />
+                            <Text></Text>
+                            <Button
+                                onPress={() => {
+                                    Editar_Sensor(array_editar);
+                                    setModalVisible(!modalVisible);
+                                }}
+                                title="Salvar"
+                                color="#00FF7F"
+                                width="5px"
+                            />
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    setArray_editar({});
+                                    setValsensor('');
+                                    setVallocal('');
+                                    setModalVisible(!modalVisible);
+                                }}
+                                title="Cancelar"
+                                color="#DC143C"
+                                width="5px"
+                            />
+                        </View></View>
+                </Modal>
+
             </ScrollView>
 
         </SafeAreaView>
@@ -247,7 +306,17 @@ const styles = StyleSheet.create({
         width: 5,
         height: 20,
     },
+    loader: {
+        top: 200,
+        alignItems: 'center',
+        textAlign: 'center',
+        left: 10,
+        width: 340,
+        height: 100,
+        alignItems: 'flex-start',
+        backgroundColor: 'white',
 
+    },
     viewsensor: {
         backgroundColor: 'yellow',
     },
@@ -274,9 +343,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 35,
-      },
+    },
 
-      modalView: {
+    modalView: {
         margin: 20,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -284,11 +353,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.00,
         elevation: 5,
-      },
+    },
 });
