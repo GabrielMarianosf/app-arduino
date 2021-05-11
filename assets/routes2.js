@@ -7,6 +7,7 @@ const Stack = createStackNavigator();
 import Home from './pages/home';
 import Config from './pages/config';
 
+
 const Routes2 = ({navigation}) => {
     return (
         <Stack.Navigator>
@@ -64,6 +65,7 @@ const Routes3 = ({navigation}) => {
         </Stack.Navigator>
     );
 }
+
 
 export { Routes2, Routes3 };
 
