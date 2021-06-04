@@ -117,7 +117,7 @@ export default function Home({ navigation }) {
                     <Text>Sensor: {obj.obj.sensor}</Text>
                     <Text>Local: {obj.obj.local}</Text>
                     <Text>Nivel: {obj.obj.nivel}</Text>
-                    <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
+                    <Text>Última Atualização: {obj.obj.ultima_data}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row" }}>
                         <View style={styles.space} />
                         <Button
