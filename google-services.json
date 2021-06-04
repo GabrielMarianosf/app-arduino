@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "214398960322",
+    "firebase_url": "https://ard-cg-default-rtdb.firebaseio.com",
+    "project_id": "ard-cg",
+    "storage_bucket": "ard-cg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214398960322:android:4aacf6684c168fde59b15b",
+        "android_client_info": {
+          "package_name": "com.iris.chacaraguaruja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214398960322-voo6gek7gbfqdndfhpks9m6b1fa03da8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGnLydiz95qDhih5ts9_xkywSzrKhcEE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214398960322-voo6gek7gbfqdndfhpks9m6b1fa03da8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

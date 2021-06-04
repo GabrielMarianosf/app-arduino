@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+
 import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
 
-// IMPORTANDO ESSA FUNÇÃO PQ O REACT NATIVE NÃO SE RESPONSABILIZA POR BIBLIOTECAS DE TERCEIROS (FIREBASE), O TIMEOUT DO APLICATIVO É DE 60 * 1000 E O FIREBASE PODE
-// PRECISAR DE MAIS TEMPO PARA O TIMEOUT, MOSTRANDO NO CONSOLE.LOG UM ERRO AMARELO DE "AVISO" PARA IGNORAR ESSE AVISO PRECISAMOS IMPORTAR ESSA FUNÇÃO E CHAMAR ELA EMBAIXO
-// PARA IGNORAR NO CONSOLO, PRECISA CHAMAR EM TODAS AS PAGINAS QUE USAR FIREBASE E TIVER CHAMADAS QUE PODEM DEMORAR MUITO.
-
-
-
-
-import config from './config';
 import { database } from './config_firebase'
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/firestore';
+
 
 export default function Home({ navigation }) {
 
@@ -27,7 +21,7 @@ export default function Home({ navigation }) {
     const [val_sensor, setValsensor] = useState(''); // string
     const [val_local, setVallocal] = useState(''); // string
 
-    useEffect(() => {
+    useEffect(() => {        
         database.collection("arduino").orderBy('sensor', 'asc').onSnapshot((querySnapshot) => {
             const sensores = [];
             querySnapshot.docs.forEach((doc) => {
@@ -48,6 +42,7 @@ export default function Home({ navigation }) {
 
     function Modal_Editar_Sensor(obj) {
 
+        console.log(expoPushToken)
         setModalVisible(!modalVisible)
         setArray_editar(obj);
 
@@ -88,7 +83,7 @@ export default function Home({ navigation }) {
 
     function Excluir_Sensor(obj) {
         Alert.alert(
-            "Excluir Sensor",
+            "Excluir Sensor ?",
             "Tem certeza que deseja excluir o sensor selecionado?",
             [
                 {
@@ -117,32 +112,34 @@ export default function Home({ navigation }) {
     function Sensores(obj) {
 
         return (
-            <View>
-                <Text>Sensor: {obj.obj.sensor}</Text>
-                <Text>Local: {obj.obj.local}</Text>
-                <Text>Nivel: {obj.obj.nivel}</Text>
-                <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
-                <View style={{ alignItems: "center", flexDirection: "row" }}>
-                    <View style={styles.space} />
-                    <Button
-                        onPress={() => {
-                            Modal_Editar_Sensor(obj.obj)
-                        }}
-                        title="Editar"
-                        color="#00FF7F"
-                        width="10px"
-                    />
+            <ScrollView>
+                <View>
+                    <Text>Sensor: {obj.obj.sensor}</Text>
+                    <Text>Local: {obj.obj.local}</Text>
+                    <Text>Nivel: {obj.obj.nivel}</Text>
+                    <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
+                    <View style={{ alignItems: "center", flexDirection: "row" }}>
+                        <View style={styles.space} />
+                        <Button
+                            onPress={() => {
+                                Modal_Editar_Sensor(obj.obj)
+                            }}
+                            title="Editar"
+                            color="#00FF7F"
+                            width="10px"
+                        />
 
-                    <View style={styles.space} />
-                    <Button
-                        onPress={() => {
-                            Excluir_Sensor(obj.obj)
-                        }}
-                        title="Excluir"
-                        color="#DC143C"
-                        width="10px"
-                    /></View>
-            </View>
+                        <View style={styles.space} />
+                        <Button
+                            onPress={() => {
+                                Excluir_Sensor(obj.obj)
+                            }}
+                            title="Excluir"
+                            color="#DC143C"
+                            width="10px"
+                        /></View>
+                </View>
+            </ScrollView>
         )
 
     }
@@ -264,6 +261,7 @@ export default function Home({ navigation }) {
     );
 
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
