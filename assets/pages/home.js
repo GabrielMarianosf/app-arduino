@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
 
+import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, Image, ScrollView, SafeAreaView, Animated } from 'react-native';
 
-// IMPORTANDO ESSA FUNÇÃO PQ O REACT NATIVE NÃO SE RESPONSABILIZA POR BIBLIOTECAS DE TERCEIROS (FIREBASE), O TIMEOUT DO APLICATIVO É DE 60 * 1000 E O FIREBASE PODE
-// PRECISAR DE MAIS TEMPO PARA O TIMEOUT, MOSTRANDO NO CONSOLE.LOG UM ERRO AMARELO DE "AVISO" PARA IGNORAR ESSE AVISO PRECISAMOS IMPORTAR ESSA FUNÇÃO E CHAMAR ELA EMBAIXO
-// PARA IGNORAR NO CONSOLO, PRECISA CHAMAR EM TODAS AS PAGINAS QUE USAR FIREBASE E TIVER CHAMADAS QUE PODEM DEMORAR MUITO.
-
-
-
-
-import config from './config';
+import agua from '../android/drawable-xxxhdpi/agua.gif'
 import { database } from './config_firebase'
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/firestore';
+
 
 export default function Home({ navigation }) {
 
@@ -27,7 +21,7 @@ export default function Home({ navigation }) {
     const [val_sensor, setValsensor] = useState(''); // string
     const [val_local, setVallocal] = useState(''); // string
 
-    useEffect(() => {
+    useEffect(() => {        
         database.collection("arduino").orderBy('sensor', 'asc').onSnapshot((querySnapshot) => {
             const sensores = [];
             querySnapshot.docs.forEach((doc) => {
@@ -88,7 +82,7 @@ export default function Home({ navigation }) {
 
     function Excluir_Sensor(obj) {
         Alert.alert(
-            "Excluir Sensor",
+            "Excluir Sensor ?",
             "Tem certeza que deseja excluir o sensor selecionado?",
             [
                 {
@@ -116,35 +110,96 @@ export default function Home({ navigation }) {
 
     function Sensores(obj) {
 
-        return (
-            <View>
-                <Text>Sensor: {obj.obj.sensor}</Text>
-                <Text>Local: {obj.obj.local}</Text>
-                <Text>Nivel: {obj.obj.nivel}</Text>
-                <Text>Ultima Atualização: {obj.obj.ultima_data}</Text>
-                <View style={{ alignItems: "center", flexDirection: "row" }}>
-                    <View style={styles.space} />
-                    <Button
-                        onPress={() => {
-                            Modal_Editar_Sensor(obj.obj)
-                        }}
-                        title="Editar"
-                        color="#00FF7F"
-                        width="10px"
-                    />
+        console.log(obj.obj.nivel)
 
-                    <View style={styles.space} />
-                    <Button
-                        onPress={() => {
-                            Excluir_Sensor(obj.obj)
-                        }}
-                        title="Excluir"
-                        color="#DC143C"
-                        width="10px"
-                    /></View>
-            </View>
-        )
+        var nivel = obj.obj.nivel
 
+        if (nivel <= 1023) {
+
+            return (
+                <ScrollView>
+                    <View>
+                        <Text>Sensor: {obj.obj.sensor}</Text>
+                        <Text>Local: {obj.obj.local}</Text>
+                        <Text>Nivel: {obj.obj.nivel}</Text>
+                        <Text>Última Atualização: {obj.obj.ultima_data}</Text>
+                        <View style={ { width: 90, height: 90, top: -80, left: 260   }  }> 
+                            {/* <FlatList
+                                data={obj}
+                                renderItem={ (item) => <Water obj={item.item} />  }
+                            /> */}
+                            {/* <Water objeto={obj.obj}/> */}
+
+                            <Image source={agua} style={{ width: 87, height: 90  }} /> 
+                            
+                        </View>
+                        
+                        {/* position: 'absolute', top: -10, left: 260 */}
+                        <View style={{ alignItems: "center", flexDirection: "row", top: -75 }}>
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Modal_Editar_Sensor(obj.obj)
+                                }}
+                                title="Editar"
+                                color="#00FF7F"
+                                width="10px"
+                            />
+    
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Excluir_Sensor(obj.obj)
+                                }}
+                                title="Excluir"
+                                color="#DC143C"
+                                width="10px"
+                            /></View>
+                    </View>
+                </ScrollView>
+            )
+            
+        } else {
+            return (
+                <ScrollView>
+                    <View>
+                        <Text>Sensor: {obj.obj.sensor}</Text>
+                        <Text>Local: {obj.obj.local}</Text>
+                        <Text>Nivel: {obj.obj.nivel}</Text>
+                        <Text>Última Atualização: {obj.obj.ultima_data}</Text>
+                        <View style={ {  width: 90, height: 90, top: -80, left: 260   }  }> 
+                            {/* <FlatList
+                                data={obj}
+                                renderItem={ (item) => <Water obj={item.item} />  }
+                            /> */}
+                            {/* <Water objeto={obj.obj}/> */}
+                            {/* <Image source={agua} style={{ width: 87, height: 90, top: -80, left: 260, padding: 0 }} />  */}
+                        </View>
+                        
+                        <View style={{ alignItems: "center", flexDirection: "row", top: -75 }}>
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Modal_Editar_Sensor(obj.obj)
+                                }}
+                                title="Editar"
+                                color="#00FF7F"
+                                width="10px"
+                            />
+    
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Excluir_Sensor(obj.obj)
+                                }}
+                                title="Excluir"
+                                color="#DC143C"
+                                width="10px"
+                            /></View>
+                    </View>
+                </ScrollView>
+            )
+        }
     }
 
     function Cadsensor() {
@@ -193,7 +248,7 @@ export default function Home({ navigation }) {
                 <View value="sensor" style={styles.viewsensor}>
                     <FlatList
                         data={sensores}
-                        renderItem={(item) => <Sensores obj={item.item} />}
+                        renderItem={ (item) => <Sensores obj={item.item} />  }
                     />
 
                 </View>
@@ -264,6 +319,7 @@ export default function Home({ navigation }) {
     );
 
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -318,7 +374,8 @@ const styles = StyleSheet.create({
 
     },
     viewsensor: {
-        backgroundColor: 'yellow',
+        backgroundColor: 'yellow'
+        
     },
     textsensor: {
         top: -38,
