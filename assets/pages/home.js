@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, ImageBackgroud, ScrollView, SafeAreaView, Animated } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, Image, ScrollView, SafeAreaView, Animated } from 'react-native';
 
-
+import agua from '../android/drawable-xxxhdpi/agua.gif'
 import { database } from './config_firebase'
 import 'firebase/database';
 import 'firebase/storage';
@@ -42,7 +42,6 @@ export default function Home({ navigation }) {
 
     function Modal_Editar_Sensor(obj) {
 
-        console.log(expoPushToken)
         setModalVisible(!modalVisible)
         setArray_editar(obj);
 
@@ -111,37 +110,96 @@ export default function Home({ navigation }) {
 
     function Sensores(obj) {
 
-        return (
-            <ScrollView>
-                <View>
-                    <Text>Sensor: {obj.obj.sensor}</Text>
-                    <Text>Local: {obj.obj.local}</Text>
-                    <Text>Nivel: {obj.obj.nivel}</Text>
-                    <Text>Última Atualização: {obj.obj.ultima_data}</Text>
-                    <View style={{ alignItems: "center", flexDirection: "row" }}>
-                        <View style={styles.space} />
-                        <Button
-                            onPress={() => {
-                                Modal_Editar_Sensor(obj.obj)
-                            }}
-                            title="Editar"
-                            color="#00FF7F"
-                            width="10px"
-                        />
+        console.log(obj.obj.nivel)
 
-                        <View style={styles.space} />
-                        <Button
-                            onPress={() => {
-                                Excluir_Sensor(obj.obj)
-                            }}
-                            title="Excluir"
-                            color="#DC143C"
-                            width="10px"
-                        /></View>
-                </View>
-            </ScrollView>
-        )
+        var nivel = obj.obj.nivel
 
+        if (nivel <= 1023) {
+
+            return (
+                <ScrollView>
+                    <View>
+                        <Text>Sensor: {obj.obj.sensor}</Text>
+                        <Text>Local: {obj.obj.local}</Text>
+                        <Text>Nivel: {obj.obj.nivel}</Text>
+                        <Text>Última Atualização: {obj.obj.ultima_data}</Text>
+                        <View style={ { width: 90, height: 90, top: -80, left: 260   }  }> 
+                            {/* <FlatList
+                                data={obj}
+                                renderItem={ (item) => <Water obj={item.item} />  }
+                            /> */}
+                            {/* <Water objeto={obj.obj}/> */}
+
+                            <Image source={agua} style={{ width: 87, height: 90  }} /> 
+                            
+                        </View>
+                        
+                        {/* position: 'absolute', top: -10, left: 260 */}
+                        <View style={{ alignItems: "center", flexDirection: "row", top: -75 }}>
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Modal_Editar_Sensor(obj.obj)
+                                }}
+                                title="Editar"
+                                color="#00FF7F"
+                                width="10px"
+                            />
+    
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Excluir_Sensor(obj.obj)
+                                }}
+                                title="Excluir"
+                                color="#DC143C"
+                                width="10px"
+                            /></View>
+                    </View>
+                </ScrollView>
+            )
+            
+        } else {
+            return (
+                <ScrollView>
+                    <View>
+                        <Text>Sensor: {obj.obj.sensor}</Text>
+                        <Text>Local: {obj.obj.local}</Text>
+                        <Text>Nivel: {obj.obj.nivel}</Text>
+                        <Text>Última Atualização: {obj.obj.ultima_data}</Text>
+                        <View style={ {  width: 90, height: 90, top: -80, left: 260   }  }> 
+                            {/* <FlatList
+                                data={obj}
+                                renderItem={ (item) => <Water obj={item.item} />  }
+                            /> */}
+                            {/* <Water objeto={obj.obj}/> */}
+                            {/* <Image source={agua} style={{ width: 87, height: 90, top: -80, left: 260, padding: 0 }} />  */}
+                        </View>
+                        
+                        <View style={{ alignItems: "center", flexDirection: "row", top: -75 }}>
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Modal_Editar_Sensor(obj.obj)
+                                }}
+                                title="Editar"
+                                color="#00FF7F"
+                                width="10px"
+                            />
+    
+                            <View style={styles.space} />
+                            <Button
+                                onPress={() => {
+                                    Excluir_Sensor(obj.obj)
+                                }}
+                                title="Excluir"
+                                color="#DC143C"
+                                width="10px"
+                            /></View>
+                    </View>
+                </ScrollView>
+            )
+        }
     }
 
     function Cadsensor() {
@@ -190,7 +248,7 @@ export default function Home({ navigation }) {
                 <View value="sensor" style={styles.viewsensor}>
                     <FlatList
                         data={sensores}
-                        renderItem={(item) => <Sensores obj={item.item} />}
+                        renderItem={ (item) => <Sensores obj={item.item} />  }
                     />
 
                 </View>
@@ -316,7 +374,8 @@ const styles = StyleSheet.create({
 
     },
     viewsensor: {
-        backgroundColor: 'yellow',
+        backgroundColor: 'yellow'
+        
     },
     textsensor: {
         top: -38,
