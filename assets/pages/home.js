@@ -130,7 +130,7 @@ export default function Home({ navigation }) {
                         <View style={styles.viewsensor}>
                             <Text style={{padding: 3, top: -5}}> Sensor: {obj.obj.sensor}</Text>
                             <Text style={{padding: 3, top: -5}}> Local: {obj.obj.local}</Text>
-                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}</Text>
+                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}%</Text>
                             <Text style={{padding: 3, top: -5}}> Última Atualização: {obj.obj.ultima_data}</Text>
                             <View style={{
                                 width: 50, height: 10, top: -105, left: 260,
@@ -161,6 +161,7 @@ export default function Home({ navigation }) {
                                     width: 40, height: 40, position: 'absolute',
                                     top: 8, left: 10
                                 }} />
+                                <Text style={{left: 17, top: -8}}>{nivel}%</Text>
 
                             </View>
                             <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
@@ -197,7 +198,7 @@ export default function Home({ navigation }) {
                         <View style={styles.viewsensor}>
                             <Text style={{padding: 3, top: -5}}> Sensor: {obj.obj.sensor}</Text>
                             <Text style={{padding: 3, top: -5}}> Local: {obj.obj.local}</Text>
-                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}</Text>
+                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}%</Text>
                             <Text style={{padding: 3, top: -5}}> Última Atualização: {obj.obj.ultima_data}</Text>
                             <View style={{
                                 width: 50, height: 10, top: -105, left: 260,
@@ -220,14 +221,12 @@ export default function Home({ navigation }) {
                                     fontSize={13}
                                     showProgressValue={false}
 
-
-
-
                                 />
                                 <Image source={agua} style={{
                                     width: 40, height: 40, position: 'absolute',
                                     top: 11, left: 10
                                 }} />
+                                <Text style={{left: 17, top: -8}}>{nivel}%</Text>
 
                             </View>
                             <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
@@ -259,7 +258,7 @@ export default function Home({ navigation }) {
                         <View style={styles.viewsensor}>
                             <Text style={{padding: 3, top: -5}}> Sensor: {obj.obj.sensor}</Text>
                             <Text style={{padding: 3, top: -5}}> Local: {obj.obj.local}</Text>
-                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}</Text>
+                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}%</Text>
                             <Text style={{padding: 3, top: -5}}> Última Atualização: {obj.obj.ultima_data}</Text>
                             <View style={{
                                 width: 50, height: 10, top: -105, left: 260,
@@ -286,6 +285,7 @@ export default function Home({ navigation }) {
                                     width: 40, height: 40, position: 'absolute',
                                     top: 11, left: 10
                                 }} />
+                                <Text style={{left: 17, top: -7}}>{nivel}%</Text>
 
                             </View>
                             <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
