@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import CircularProgress from 'react-native-circular-progress-indicator';
+
 
 import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, Image, ScrollView, SafeAreaView, Animated } from 'react-native';
 
 import agua from '../android/drawable-xxxhdpi/agua.gif'
+import sol from '../android/drawable-xxxhdpi/sol.gif'
+import molhando from '../android/drawable-xxxhdpi/molhando.gif'
 import { database } from './config_firebase'
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/firestore';
+import { Component } from 'react';
 
 
 export default function Home({ navigation }) {
@@ -21,17 +26,18 @@ export default function Home({ navigation }) {
     const [val_sensor, setValsensor] = useState(''); // string
     const [val_local, setVallocal] = useState(''); // string
 
-    useEffect(() => {        
+    useEffect(() => {
         database.collection("arduino").orderBy('sensor', 'asc').onSnapshot((querySnapshot) => {
             const sensores = [];
             querySnapshot.docs.forEach((doc) => {
-                const { local, nivel, sensor, ultima_data } = doc.data();
+                const { local, nivel, sensor, ultima_data, ligado } = doc.data();
                 sensores.push({
                     id: doc.id,
                     local,
                     nivel,
                     sensor,
                     ultima_data,
+                    ligado,
                 });
             });
             setSensores(sensores);
@@ -108,108 +114,215 @@ export default function Home({ navigation }) {
 
     }
 
+
+
     function Sensores(obj) {
 
-        console.log(obj.obj.nivel)
+        var nivel = parseInt(obj.obj.nivel)
+        var ligado = obj.obj.ligado
+        var max = 100
 
-        var nivel = obj.obj.nivel
 
-        if (nivel <= 1023) {
+        if (ligado === '1') {
 
             return (
-                <ScrollView>
-                    <View>
-                        <Text>Sensor: {obj.obj.sensor}</Text>
-                        <Text>Local: {obj.obj.local}</Text>
-                        <Text>Nivel: {obj.obj.nivel}</Text>
-                        <Text>Última Atualização: {obj.obj.ultima_data}</Text>
-                        <View style={ { width: 90, height: 90, top: -80, left: 260   }  }> 
-                            {/* <FlatList
-                                data={obj}
-                                renderItem={ (item) => <Water obj={item.item} />  }
-                            /> */}
-                            {/* <Water objeto={obj.obj}/> */}
+                <View style={{paddingBottom: 5}}>
+                        <View style={styles.viewsensor}>
+                            <Text style={{padding: 3, top: -5}}> Sensor: {obj.obj.sensor}</Text>
+                            <Text style={{padding: 3, top: -5}}> Local: {obj.obj.local}</Text>
+                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}</Text>
+                            <Text style={{padding: 3, top: -5}}> Última Atualização: {obj.obj.ultima_data}</Text>
+                            <View style={{
+                                width: 50, height: 10, top: -105, left: 260,
+                            }}>
 
-                            <Image source={agua} style={{ width: 87, height: 90  }} /> 
-                            
+                                <CircularProgress
+                                    value={nivel}
+                                    radius={30}
+                                    inActiveStrokeColor={'#000000'}
+                                    inActiveStrokeOpacity={0.1}
+                                    textStyle={{ left: 12 }}
+                                    textColor={'black'}
+                                    valueSuffix={'%'}
+                                    maxValue={max}
+                                    strokeLinecap={'butt'}
+                                    activeStrokeColor={'#00FF7F'}
+                                    inActiveStrokeColor={'rgba(50,120,155,0.3)'}
+                                    activeStrokeWidth={4}
+                                    duration={1500}
+                                    fontSize={13}
+                                    showProgressValue={false}
+
+
+
+
+                                />
+                                <Image source={molhando} style={{
+                                    width: 40, height: 40, position: 'absolute',
+                                    top: 8, left: 10
+                                }} />
+
+                            </View>
+                            <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
+                                <View style={styles.space} />
+                                <Button
+                                    onPress={() => {
+                                        Modal_Editar_Sensor(obj.obj)
+                                    }}
+                                    title="Editar"
+                                    color="#00FF7F"
+                                    width="10px"
+                                />
+
+                                <View style={styles.space} />
+                                <Button
+                                    onPress={() => {
+                                        Excluir_Sensor(obj.obj)
+                                    }}
+                                    title="Excluir"
+                                    color="#DC143C"
+                                    width="10px"
+                                /></View>
                         </View>
-                        
-                        {/* position: 'absolute', top: -10, left: 260 */}
-                        <View style={{ alignItems: "center", flexDirection: "row", top: -75 }}>
-                            <View style={styles.space} />
-                            <Button
-                                onPress={() => {
-                                    Modal_Editar_Sensor(obj.obj)
-                                }}
-                                title="Editar"
-                                color="#00FF7F"
-                                width="10px"
-                            />
-    
-                            <View style={styles.space} />
-                            <Button
-                                onPress={() => {
-                                    Excluir_Sensor(obj.obj)
-                                }}
-                                title="Excluir"
-                                color="#DC143C"
-                                width="10px"
-                            /></View>
                     </View>
-                </ScrollView>
             )
-            
+
+
         } else {
-            return (
-                <ScrollView>
-                    <View>
-                        <Text>Sensor: {obj.obj.sensor}</Text>
-                        <Text>Local: {obj.obj.local}</Text>
-                        <Text>Nivel: {obj.obj.nivel}</Text>
-                        <Text>Última Atualização: {obj.obj.ultima_data}</Text>
-                        <View style={ {  width: 90, height: 90, top: -80, left: 260   }  }> 
-                            {/* <FlatList
-                                data={obj}
-                                renderItem={ (item) => <Water obj={item.item} />  }
-                            /> */}
-                            {/* <Water objeto={obj.obj}/> */}
-                            {/* <Image source={agua} style={{ width: 87, height: 90, top: -80, left: 260, padding: 0 }} />  */}
+
+            if (nivel >= 50) {
+
+                return (
+                    <View style={{paddingBottom: 5}}>
+                        <View style={styles.viewsensor}>
+                            <Text style={{padding: 3, top: -5}}> Sensor: {obj.obj.sensor}</Text>
+                            <Text style={{padding: 3, top: -5}}> Local: {obj.obj.local}</Text>
+                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}</Text>
+                            <Text style={{padding: 3, top: -5}}> Última Atualização: {obj.obj.ultima_data}</Text>
+                            <View style={{
+                                width: 50, height: 10, top: -105, left: 260,
+                            }}>
+
+                                <CircularProgress
+                                    value={nivel}
+                                    radius={30}
+                                    inActiveStrokeColor={'#000000'}
+                                    inActiveStrokeOpacity={0.1}
+                                    textStyle={{ left: 12 }}
+                                    textColor={'black'}
+                                    valueSuffix={'%'}
+                                    maxValue={max}
+                                    strokeLinecap={'butt'}
+                                    activeStrokeColor={'#00FF7F'}
+                                    inActiveStrokeColor={'rgba(50,120,155,0.3)'}
+                                    activeStrokeWidth={4}
+                                    duration={1500}
+                                    fontSize={13}
+                                    showProgressValue={false}
+
+
+
+
+                                />
+                                <Image source={agua} style={{
+                                    width: 40, height: 40, position: 'absolute',
+                                    top: 11, left: 10
+                                }} />
+
+                            </View>
+                            <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
+                                <View style={styles.space} />
+                                <Button
+                                    onPress={() => {
+                                        Modal_Editar_Sensor(obj.obj)
+                                    }}
+                                    title="Editar"
+                                    color="#00FF7F"
+                                    width="10px"
+                                />
+
+                                <View style={styles.space} />
+                                <Button
+                                    onPress={() => {
+                                        Excluir_Sensor(obj.obj)
+                                    }}
+                                    title="Excluir"
+                                    color="#DC143C"
+                                    width="10px"
+                                /></View>
                         </View>
-                        
-                        <View style={{ alignItems: "center", flexDirection: "row", top: -75 }}>
-                            <View style={styles.space} />
-                            <Button
-                                onPress={() => {
-                                    Modal_Editar_Sensor(obj.obj)
-                                }}
-                                title="Editar"
-                                color="#00FF7F"
-                                width="10px"
-                            />
-    
-                            <View style={styles.space} />
-                            <Button
-                                onPress={() => {
-                                    Excluir_Sensor(obj.obj)
-                                }}
-                                title="Excluir"
-                                color="#DC143C"
-                                width="10px"
-                            /></View>
                     </View>
-                </ScrollView>
-            )
+                )
+            } else {
+                return (
+                    <View style={{paddingBottom: 5}}>
+                        <View style={styles.viewsensor}>
+                            <Text style={{padding: 3, top: -5}}> Sensor: {obj.obj.sensor}</Text>
+                            <Text style={{padding: 3, top: -5}}> Local: {obj.obj.local}</Text>
+                            <Text style={{padding: 3, top: -5}}> Nivel: {obj.obj.nivel}</Text>
+                            <Text style={{padding: 3, top: -5}}> Última Atualização: {obj.obj.ultima_data}</Text>
+                            <View style={{
+                                width: 50, height: 10, top: -105, left: 260,
+                            }}>
+
+                                <CircularProgress
+                                    value={nivel}
+                                    radius={30}
+                                    inActiveStrokeColor={'#000000'}
+                                    inActiveStrokeOpacity={0.1}
+                                    textStyle={{ left: 12 }}
+                                    textColor={'black'}
+                                    valueSuffix={'%'}
+                                    maxValue={max}
+                                    strokeLinecap={'butt'}
+                                    activeStrokeColor={'#00FF7F'}
+                                    inActiveStrokeColor={'rgba(50,120,155,0.3)'}
+                                    activeStrokeWidth={4}
+                                    duration={1500}
+                                    fontSize={13}
+                                    showProgressValue={false}
+                                />
+                                <Image source={sol} style={{
+                                    width: 40, height: 40, position: 'absolute',
+                                    top: 11, left: 10
+                                }} />
+
+                            </View>
+                            <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
+                                <View style={styles.space} />
+                                <Button
+                                    onPress={() => {
+                                        Modal_Editar_Sensor(obj.obj)
+                                    }}
+                                    title="Editar"
+                                    color="#00FF7F"
+                                    width="10px"
+                                />
+
+                                <View style={styles.space} />
+                                <Button
+                                    onPress={() => {
+                                        Excluir_Sensor(obj.obj)
+                                    }}
+                                    title="Excluir"
+                                    color="#DC143C"
+                                    width="10px"
+                                /></View>
+                        </View>
+                    </View>
+
+                )
+            }
         }
+
+
     }
 
+
+
     function Cadsensor() {
-        const data = {
-            local: ' ---',
-            nivel: ' ----- ',
-            sensor: ' ----- ',
-            ultima_data: ' ----- '
-        };
         const res = database.collection('arduino').add({
+            ligado: '0',
             local: '-',
             nivel: '-',
             sensor: '999',
@@ -230,90 +343,88 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView>
 
-            <ScrollView>
+            <StatusBar
+                translucent={true}
+                barStyle="light-content"
+                hidden={false}
+                backgroundColor="#00FF7F"
+            />
 
-                <StatusBar
-                    translucent={true}
-                    barStyle="light-content"
-                    hidden={false}
-                    backgroundColor="#00FF7F"
-                />
+            
+            <Text style={{ color: 'black', left: '30%', paddingTop: 10, paddingBottom: 5 }}> Lista de Sensores</Text>
+            
+            {/* <View value="sensor" style={styles.viewsensor}>
+                
+
+            </View> */}
+            <FlatList
+                data={sensores}
+                renderItem={(item) => <Sensores obj={item.item} />}
+                
+            />
+
+            {/* <Button
+                onPress={() => Cadsensor()}
+                title="Adicionar Sensor"
+                color="#00FF7F"
+                width="10px"
+            /> */}
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                key={array_editar}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text>Editando Sensor: {array_editar.sensor} </Text>
+                        <Text></Text>
+                        <Text> * Numero: </Text>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={text => (setValsensor(text))}
+                            placeholder={'Valor Atual: ' + array_editar.sensor}
+                            autoFocus={true}
+                            maxLength={50}
+                            textAlign={'left'}
+                        />
+                        <Text></Text>
+                        <Text> * Local: </Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder={'Valor atual: ' + array_editar.local}
+                            onChangeText={text => (setVallocal(text))}
+
+                        />
+                        <Text></Text>
+                        <Button
+                            onPress={() => {
+                                Editar_Sensor(array_editar);
+                                setModalVisible(!modalVisible);
+                            }}
+                            title="Salvar"
+                            color="#00FF7F"
+                            width="5px"
+                        />
+                        <View style={styles.space} />
+                        <Button
+                            onPress={() => {
+                                setArray_editar({});
+                                setValsensor('');
+                                setVallocal('');
+                                setModalVisible(!modalVisible);
+                            }}
+                            title="Cancelar"
+                            color="#DC143C"
+                            width="5px"
+                        />
+                    </View></View>
+            </Modal>
 
 
-                <View style={styles.container}>
-                    <Text style={styles.texto}> Lista / Gerenciamento de Sensores</Text>
-                </View>
-                <View value="sensor" style={styles.viewsensor}>
-                    <FlatList
-                        data={sensores}
-                        renderItem={ (item) => <Sensores obj={item.item} />  }
-                    />
-
-                </View>
-
-                <View style={{ alignItems: "center" }}>
-                    <Button
-                        onPress={() => Cadsensor()}
-                        title="Adicionar Sensor"
-                        color="#00FF7F"
-                        width="10px"
-                    />
-                </View>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    key={array_editar}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text>Editando Sensor: {array_editar.sensor} </Text>
-                            <Text></Text>
-                            <Text> * Numero: </Text>
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={text => (setValsensor(text))}
-                                placeholder={'Valor Atual: ' + array_editar.sensor}
-                                autoFocus={true}
-                                maxLength={50}
-                                textAlign={'left'}
-                            />
-                            <Text></Text>
-                            <Text> * Local: </Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder={'Valor atual: ' + array_editar.local}
-                                onChangeText={text => (setVallocal(text))}
-
-                            />
-                            <Text></Text>
-                            <Button
-                                onPress={() => {
-                                    Editar_Sensor(array_editar);
-                                    setModalVisible(!modalVisible);
-                                }}
-                                title="Salvar"
-                                color="#00FF7F"
-                                width="5px"
-                            />
-                            <View style={styles.space} />
-                            <Button
-                                onPress={() => {
-                                    setArray_editar({});
-                                    setValsensor('');
-                                    setVallocal('');
-                                    setModalVisible(!modalVisible);
-                                }}
-                                title="Cancelar"
-                                color="#DC143C"
-                                width="5px"
-                            />
-                        </View></View>
-                </Modal>
-
-            </ScrollView>
 
         </SafeAreaView>
     );
@@ -374,8 +485,23 @@ const styles = StyleSheet.create({
 
     },
     viewsensor: {
-        backgroundColor: 'yellow'
+        backgroundColor: 'white',
+        borderWidth: 0.5,
+        elevation: 3,
+        left: 5,
+        borderRadius: 20,
+        padding: 10,
+        width: 350,
+        height: 150,
         
+
+    },
+    spaco: {
+        backgroundColor: 'black',
+        width: 100,
+        height: 100,
+
+
     },
     textsensor: {
         top: -38,
@@ -414,7 +540,7 @@ const styles = StyleSheet.create({
             height: 2,
         },
         shadowOpacity: 0.25,
-        shadowRadius: 3.00,
+        shadowRadius: 0.00,
         elevation: 5,
     },
 });
