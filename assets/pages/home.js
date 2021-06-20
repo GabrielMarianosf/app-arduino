@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, 
+            View, TextInput, Image, SafeAreaView } from 'react-native';
 
-
-import { ActivityIndicator, FlatList, StyleSheet, Text, Modal, Button, Alert, Switch, View, TextInput, Image, ScrollView, SafeAreaView, Animated } from 'react-native';
-
-import agua from '../android/drawable-xxxhdpi/agua.gif'
-import sol from '../android/drawable-xxxhdpi/sol.gif'
-import molhando from '../android/drawable-xxxhdpi/molhando.gif'
+// Conexão com o banco firebase
 import { database } from './config_firebase'
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/firestore';
-import { Component } from 'react';
 
+// Imagens/status dos Sensores
+import agua from '../android/drawable-xxxhdpi/agua.gif'
+import sol from '../android/drawable-xxxhdpi/sol.gif'
+import molhando from '../android/drawable-xxxhdpi/molhando.gif'
 
 export default function Home({ navigation }) {
 
+    // useState inicio loading
     const [loading, setLoading] = useState(true);
+    // useState recebe lista dos sensores
     const [sensores, setSensores] = useState([]);
 
-    // variaveis states para editar um sensor
+    // useState modal de edição dos sensores
     const [modalVisible, setModalVisible] = useState(false); // bollean
+    // useState variavel geral para salvar os novos valores inseridos no editar sensor
     const [array_editar, setArray_editar] = useState([{}]); // objeto
+    // useState 
     const [val_sensor, setValsensor] = useState(''); // string
+    // 
     const [val_local, setVallocal] = useState(''); // string
 
     useEffect(() => {
@@ -45,12 +50,9 @@ export default function Home({ navigation }) {
         });
     }, [])
 
-
     function Modal_Editar_Sensor(obj) {
-
         setModalVisible(!modalVisible)
         setArray_editar(obj);
-
     }
 
     function Editar_Sensor(obj) {
@@ -83,7 +85,6 @@ export default function Home({ navigation }) {
             });
             Alert.alert('Dados Salvos com Sucesso!');
         }
-
     }
 
     function Excluir_Sensor(obj) {
@@ -111,10 +112,7 @@ export default function Home({ navigation }) {
                 }
             ]
         );
-
     }
-
-
 
     function Sensores(obj) {
 
@@ -122,9 +120,7 @@ export default function Home({ navigation }) {
         var ligado = obj.obj.ligado
         var max = 100
 
-
         if (ligado === '1') {
-
             return (
                 <View style={{paddingBottom: 5}}>
                         <View style={styles.viewsensor}>
@@ -135,7 +131,6 @@ export default function Home({ navigation }) {
                             <View style={{
                                 width: 50, height: 10, top: -105, left: 260,
                             }}>
-
                                 <CircularProgress
                                     value={nivel}
                                     radius={30}
@@ -152,17 +147,12 @@ export default function Home({ navigation }) {
                                     duration={1500}
                                     fontSize={13}
                                     showProgressValue={false}
-
-
-
-
                                 />
                                 <Image source={molhando} style={{
                                     width: 40, height: 40, position: 'absolute',
                                     top: 8, left: 10
                                 }} />
                                 <Text style={{left: 17, top: -8}}>{nivel}%</Text>
-
                             </View>
                             <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
                                 <View style={styles.space} />
@@ -174,7 +164,6 @@ export default function Home({ navigation }) {
                                     color="#00FF7F"
                                     width="10px"
                                 />
-
                                 <View style={styles.space} />
                                 <Button
                                     onPress={() => {
@@ -187,12 +176,9 @@ export default function Home({ navigation }) {
                         </View>
                     </View>
             )
-
-
         } else {
 
             if (nivel >= 50) {
-
                 return (
                     <View style={{paddingBottom: 5}}>
                         <View style={styles.viewsensor}>
@@ -203,7 +189,6 @@ export default function Home({ navigation }) {
                             <View style={{
                                 width: 50, height: 10, top: -105, left: 260,
                             }}>
-
                                 <CircularProgress
                                     value={nivel}
                                     radius={30}
@@ -220,14 +205,12 @@ export default function Home({ navigation }) {
                                     duration={1500}
                                     fontSize={13}
                                     showProgressValue={false}
-
                                 />
                                 <Image source={agua} style={{
                                     width: 40, height: 40, position: 'absolute',
                                     top: 11, left: 10
                                 }} />
                                 <Text style={{left: 17, top: -8}}>{nivel}%</Text>
-
                             </View>
                             <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
                                 <View style={styles.space} />
@@ -239,7 +222,6 @@ export default function Home({ navigation }) {
                                     color="#00FF7F"
                                     width="10px"
                                 />
-
                                 <View style={styles.space} />
                                 <Button
                                     onPress={() => {
@@ -263,7 +245,6 @@ export default function Home({ navigation }) {
                             <View style={{
                                 width: 50, height: 10, top: -105, left: 260,
                             }}>
-
                                 <CircularProgress
                                     value={nivel}
                                     radius={30}
@@ -286,7 +267,6 @@ export default function Home({ navigation }) {
                                     top: 11, left: 10
                                 }} />
                                 <Text style={{left: 17, top: -7}}>{nivel}%</Text>
-
                             </View>
                             <View style={{ alignItems: "center", flexDirection: "row", top: -23, paddingBottom: 15, paddingTop: 10 }}>
                                 <View style={styles.space} />
@@ -298,7 +278,6 @@ export default function Home({ navigation }) {
                                     color="#00FF7F"
                                     width="10px"
                                 />
-
                                 <View style={styles.space} />
                                 <Button
                                     onPress={() => {
@@ -310,25 +289,19 @@ export default function Home({ navigation }) {
                                 /></View>
                         </View>
                     </View>
-
                 )
             }
         }
-
-
     }
-
-
 
     function Cadsensor() {
         const res = database.collection('arduino').add({
             ligado: '0',
             local: '-',
-            nivel: '-',
+            nivel: '0',
             sensor: '999',
             ultima_data: '-'
         });
-        console.log(res);
     }
 
     if (loading) {
@@ -344,34 +317,25 @@ export default function Home({ navigation }) {
 
     return (
         <SafeAreaView>
-
             <StatusBar
                 translucent={true}
                 barStyle="light-content"
                 hidden={false}
                 backgroundColor="#00FF7F"
             />
-
-            
-            <Text style={{ color: 'black', left: '30%', paddingTop: 10, paddingBottom: 5 }}> Lista de Sensores</Text>
-            
-            {/* <View value="sensor" style={styles.viewsensor}>
-                
-
-            </View> */}
+            <Text style={{ color: 'black', left: '30%', paddingTop: 10, paddingBottom: 5 }}> 
+            Lista de Sensores
+            </Text>
             <FlatList
                 data={sensores}
                 renderItem={(item) => <Sensores obj={item.item} />}
-                
             />
-
-            {/* <Button
+            <Button
                 onPress={() => Cadsensor()}
                 title="Adicionar Sensor"
                 color="#00FF7F"
                 width="10px"
-            /> */}
-
+            />
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -381,8 +345,7 @@ export default function Home({ navigation }) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text>Editando Sensor: {array_editar.sensor} </Text>
-                        <Text></Text>
-                        <Text> * Numero: </Text>
+                        <Text> * Sensor: </Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={text => (setValsensor(text))}
@@ -391,15 +354,12 @@ export default function Home({ navigation }) {
                             maxLength={50}
                             textAlign={'left'}
                         />
-                        <Text></Text>
                         <Text> * Local: </Text>
                         <TextInput
                             style={styles.input}
                             placeholder={'Valor atual: ' + array_editar.local}
                             onChangeText={text => (setVallocal(text))}
-
                         />
-                        <Text></Text>
                         <Button
                             onPress={() => {
                                 Editar_Sensor(array_editar);
@@ -421,14 +381,11 @@ export default function Home({ navigation }) {
                             color="#DC143C"
                             width="5px"
                         />
-                    </View></View>
+                        </View>
+                    </View>
             </Modal>
-
-
-
         </SafeAreaView>
     );
-
 }
 
 const styles = StyleSheet.create({
@@ -438,12 +395,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         backgroundColor: 'white',
     },
-
     center: {
         alignItems: 'center',
         justifyContent: 'center'
     },
-
     fundo: {
         marginHorizontal: 20,
         padding: 20,
@@ -451,24 +406,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#7FFF00',
         borderRadius: 3
     },
-
     texto: {
         color: 'black',
         alignItems: 'center'
     },
-
     textoCenter: {
         color: 'black',
         alignItems: 'center',
         textAlign: 'center'
     },
-
     title: {
         fontWeight: 'bold',
         color: 'black',
         textAlign: 'center'
     },
-
     space: {
         width: 5,
         height: 20,
@@ -493,15 +444,11 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 350,
         height: 150,
-        
-
     },
     spaco: {
         backgroundColor: 'black',
         width: 100,
         height: 100,
-
-
     },
     textsensor: {
         top: -38,
@@ -510,7 +457,6 @@ const styles = StyleSheet.create({
     textlocal: {
         top: -38,
         left: 40
-
     },
     textnivel: {
         top: -38,
@@ -520,14 +466,12 @@ const styles = StyleSheet.create({
         top: -38,
         left: 40
     },
-
     centeredView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 35,
     },
-
     modalView: {
         margin: 20,
         backgroundColor: 'white',
