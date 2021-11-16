@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.iris.chacaraguaruja",
@@ -25,13 +23,17 @@
     "android": {
       "package": "com.iris.chacaraguaruja",
       "googleServicesFile": "./google-services.json",
-      "permissions": [ "CAMERA", "WRITE_EXTERNAL_STORAGE", "CAMERA_ROLL","USER_FACING_NOTIFICATIONS " ],
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "CAMERA_ROLL",
+        "USER_FACING_NOTIFICATIONS "
+      ],
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/android/drawable-xxxhdpi/ic_launcher-web.png",
         "backgroundColor": "#FFFFFF"
       }
     }
-
   }
 }
